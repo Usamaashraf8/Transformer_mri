@@ -32,9 +32,12 @@ env/
 *.ckpt
 *.h5
 *.pkl
-checkpoints/
 runs/
 outputs/
+
+# Keep checkpoints folder but ignore model weights
+checkpoints/*.pth
+checkpoints/*.pt
 
 # OS
 .DS_Store
