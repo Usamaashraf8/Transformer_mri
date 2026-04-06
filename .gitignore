@@ -1,5 +1,4 @@
 # Dataset (large files — keep out of git)
-dataset/
 data/
 *.nii
 *.nii.gz
