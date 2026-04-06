@@ -11,25 +11,26 @@ os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 # ── Dataset ────────────────────────────────────────────────────────────────────
 CLASSES         = ["glioma", "meningioma", "notumor", "pituitary"]
 NUM_CLASSES     = len(CLASSES)
-IMAGE_SIZE      = 224        # resize all images to 224×224
+IMAGE_SIZE      = 160        # smaller input keeps fine-tuning practical on MPS
 VAL_SPLIT       = 0.1        # 10% of training data used for validation
 
-# ── ViT Architecture (from scratch) ───────────────────────────────────────────
-PATCH_SIZE      = 16         # each patch is 16×16 pixels
-NUM_PATCHES     = (IMAGE_SIZE // PATCH_SIZE) ** 2   # 196 patches
-EMBED_DIM       = 256        # embedding dimension per patch token
-NUM_HEADS       = 8          # number of attention heads
-DEPTH           = 6          # number of transformer encoder blocks
-MLP_DIM         = 1024       # hidden size inside the MLP (feed-forward) block
-DROPOUT         = 0.1        # dropout rate throughout the model
+# ── Transformer Backbone ───────────────────────────────────────────────────────
+MODEL_NAME              = "swin_t"
+USE_PRETRAINED          = True
+FREEZE_BACKBONE_EPOCHS  = 2
+HEAD_DROPOUT            = 0.3
 
 # ── Training ───────────────────────────────────────────────────────────────────
 BATCH_SIZE      = 32
-EPOCHS          = 50
-LEARNING_RATE   = 1e-3
+EPOCHS          = 10
+BACKBONE_LR     = 1e-4
+HEAD_LR         = 7.5e-4
 WEIGHT_DECAY    = 0.05       # AdamW regularisation
-NUM_WORKERS     = 4
+NUM_WORKERS     = 0
+LABEL_SMOOTHING = 0.05
+GRAD_CLIP_NORM  = 1.0
+WARMUP_EPOCHS   = 1
 
 # ── Misc ───────────────────────────────────────────────────────────────────────
 SEED            = 42
-DEVICE          = "mps"      # change to "cuda" if you have a GPU, "cpu" otherwise
+DEVICE          = "mps"      # auto-fallback handled in code if unavailable

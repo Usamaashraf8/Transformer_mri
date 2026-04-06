@@ -10,7 +10,7 @@ from evaluate import main as eval_main
 
 if __name__ == "__main__":
     print("=" * 60)
-    print("  Brain Tumor MRI — Vision Transformer (from scratch)")
+    print("  Brain Tumor MRI — Pretrained Swin Transformer")
     print("=" * 60)
 
     print("\n[1/2] Training ...\n")
